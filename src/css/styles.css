@@ -1,0 +1,200 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+HTML {
+    /*¿GENERAL COLORS START */
+    --lightGray: rgb(180, 180, 180);
+    --midGray: rgb(166, 166, 166);
+    --darkGray: rgb(77, 77, 77);
+    --black: rgb(10, 10%, 10%);
+    --white: rgb(240, 240, 240);
+    --blackOff: rgb(38, 38, 38);
+    --whiteOff: rgb(217, 217, 217);
+    --midLight: rgb(128, 128, 128);
+    /*¿FONTS START  */
+    /*¿ FONT SIZES--START */
+    --fontSizeXL: 5em;
+    --fontSizeL: 2.8em;
+    --fontSizeG: 1.8em;
+    --fontSizeN: 1.5em;
+    --fontSizeS: 1.2em;
+    /*¿ FONT WEIGHT--START */
+    --fontWeightB: 700;
+    --fontWeightM: 500;
+    --fontWeightR: 400;
+    --fontWeightLht: 300;
+    --fontWeightXlht: 200;
+    /*¿TRANSITIONS--START */
+    --transitionUF: all 250ms ease;
+    --transitionF: all 500ms ease;
+    --transitionM: all 750ms ease;
+    --transitionS: all 1000ms ease;
+    /*¿PADDING */
+    --paddingXS: 0.25rem;
+    --paddingS: 0.5rem;
+    --paddingM: 1rem;
+    --paddingL: 1.5rem;
+    --paddingX: 2rem;
+    --paddingXX: 2.5rem;
+    /*¿GENERAL START */
+    width: 100%;
+    height: 100vh;
+    --fontSize: 10px;
+    font-size: var(--fontSize);
+    line-break: loose;
+    letter-spacing: 0.15rem;
+    line-height: 1;
+    scroll-behavior: smooth;
+    font-family: "Poppins", sans-serif;
+}
+/*!THEMES START */
+.light_theme {
+    /*¿COLORS */
+    --textColor: rgb(25, 25, 25);
+    --textContrast: rgb(225, 225, 255);
+    /*¿ BACKGROUNDS */
+    --bgColor: rgb(225, 225, 255);
+    --hover: rgba(25, 25, 25, 0.5);
+    /*¿GENERALS */
+    --firstColor: skyblue;
+}
+.dark_theme {
+    /*¿COLORS */
+    --textColor: rgb(225, 225, 255);
+    --textContrast: rgb(25, 25, 25);
+    /*¿BACKGROUNDS */
+    --bgColor: rgb(25, 25, 25);
+    --hover: rgba(250, 250, 250, 0.5);
+    /*¿GENERALS */
+    --firstColor: darkslateblue;
+}
+/*! GENERAL PAGE */
+BODY {
+    position: relative;
+    color: var(--textColor);
+    background: var(--bgColor);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    scroll-behavior: smooth;
+}
+IMG {
+    display: block;
+}
+A {
+    background: none;
+    text-decoration: none;
+    color: inherit;
+}
+A:visited,
+A:focus,
+A:active {
+    color: unset;
+}
+UL {
+    list-style: none;
+}
+BUTTON {
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+SVG {
+    height: 100%;
+    width: auto;
+    user-select: none;
+    pointer-events: none;
+}
+/*! UTILITIES */
+.flex {
+    display: flex;
+}
+.flex_column_center {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.flex_c_c {
+    justify-content: center;
+    align-items: center;
+}
+.flex_nav {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+/*! PARTS */
+.icon_container {
+    width: 100%;
+    height: 100%;
+}
+.extra_btn {
+    position: absolute;
+    width: 4rem;
+    height: 4rem;
+    right: 2rem;
+    padding: 0.5rem;
+    fill: red;
+    border-radius: 50%;
+}
+.extra_btn .icon_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.extra_btn:hover {
+    background: var(--hover);
+    fill: var(--textContrast);
+}
+.theme_btn {
+    bottom: 7rem;
+    padding: 0.75rem;
+}
+.top_btn {
+    bottom: 2rem;
+}
+HEADER {
+    width: 100%;
+    height: fit-content;
+    background: var(--bgNav);
+}
+.search_nav {
+    width: 100%;
+    height: 5rem;
+}
+.data_btn {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    color: var(--textColor);
+    letter-spacing: 0.15rem;
+}
+.data_btn:hover,
+.data_btn:active {
+    background: var(--hover);
+    color: var(--textContrast);
+}
+.description_section {
+    padding: 2rem 0;
+}
+.title_map {
+    color: var(--firstColor);
+    font-size: var(--fontSizeXL);
+    margin-bottom: 1rem;
+    font-weight: var(--fontWeightB);
+}
+.description_map {
+    color: var(--lightGray);
+    font-size: var(--fontSizeG);
+    font-weight: var(--fontWeightM);
+}
