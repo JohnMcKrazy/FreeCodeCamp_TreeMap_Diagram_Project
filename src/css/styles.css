@@ -22,6 +22,7 @@ HTML {
     --fontSizeG: 1.8em;
     --fontSizeN: 1.5em;
     --fontSizeS: 1.2em;
+    --fontSizeXS: 0.8em;
     /*¿ FONT WEIGHT--START */
     --fontWeightB: 700;
     --fontWeightM: 500;
@@ -57,7 +58,7 @@ HTML {
     --textColor: rgb(25, 25, 25);
     --textContrast: rgb(225, 225, 255);
     /*¿ BACKGROUNDS */
-    --bgColor: rgb(225, 225, 255);
+    --bgColor: rgb(240, 240, 240);
     --hover: rgba(25, 25, 25, 0.5);
     /*¿GENERALS */
     --firstColor: skyblue;
@@ -71,6 +72,12 @@ HTML {
     --hover: rgba(250, 250, 250, 0.5);
     /*¿GENERALS */
     --firstColor: darkslateblue;
+}
+.moon_icon {
+    fill: darkslateblue;
+}
+.sun_icon {
+    fill: orange;
 }
 /*! GENERAL PAGE */
 BODY {
@@ -197,4 +204,10 @@ HEADER {
     color: var(--lightGray);
     font-size: var(--fontSizeG);
     font-weight: var(--fontWeightM);
+}
+.tile-text {
+    font-weight: var(--fontWeightLht);
+    letter-spacing: 0.05rem;
+    font-size: var(--fontSizeXS);
+    width: 100%;
 }
