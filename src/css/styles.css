@@ -236,7 +236,6 @@ HEADER {
     font-size: var(--fontSizeXL);
     margin-bottom: 1rem;
     font-weight: var(--fontWeightB);
-    -webkit-text-stroke: 0.5px var(--textColor);
 }
 .description_map {
     color: var(--lightGray);
