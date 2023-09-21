@@ -7,14 +7,10 @@
 }
 HTML {
     /*¿GENERAL COLORS START */
-    --lightGray: rgb(180, 180, 180);
-    --midGray: rgb(166, 166, 166);
-    --darkGray: rgb(77, 77, 77);
     --black: rgb(10, 10%, 10%);
     --white: rgb(240, 240, 240);
-    --blackOff: rgb(38, 38, 38);
-    --whiteOff: rgb(217, 217, 217);
-    --midLight: rgb(128, 128, 128);
+    --blackOff: rgb(40, 40, 40);
+    --whiteOff: rgb(220, 220, 220);
     /*¿FONTS START  */
     /*¿ FONT SIZES--START */
     --fontSizeXL: 5em;
@@ -55,6 +51,7 @@ HTML {
 /*!THEMES START */
 .light_theme {
     /*¿COLORS */
+    --light: rgb(200, 200, 200);
     --textColor: rgb(25, 25, 25);
     --textContrast: rgb(225, 225, 255);
     /*¿ BACKGROUNDS */
@@ -65,6 +62,7 @@ HTML {
 }
 .dark_theme {
     /*¿COLORS */
+    --light: rgb(50, 50, 50);
     --textColor: rgb(225, 225, 255);
     --textContrast: rgb(25, 25, 25);
     /*¿BACKGROUNDS */
@@ -151,7 +149,7 @@ SVG {
     height: 4rem;
     right: 2rem;
     padding: 0.5rem;
-    fill: red;
+    fill: var(--firstColor);
     border-radius: 50%;
 }
 .extra_btn .icon_container {
@@ -185,6 +183,7 @@ HEADER {
     text-align: center;
     color: var(--textColor);
     letter-spacing: 0.15rem;
+    background: var(--light);
 }
 .data_btn:hover,
 .data_btn:active {
@@ -192,7 +191,13 @@ HEADER {
     color: var(--textContrast);
 }
 .description_section {
-    padding: 2rem 0;
+    padding: 4rem 0;
+}
+.description_section,
+.map_section,
+.legend_section {
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
 }
 .title_map {
     color: var(--firstColor);

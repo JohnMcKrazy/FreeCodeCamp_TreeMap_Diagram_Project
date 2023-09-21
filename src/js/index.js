@@ -8,16 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
             child = parentElement.lastElementChild;
         }
     };
-    //^ DELETE ARRAY ^//
-    const deleteArrElements = (parentElement) => {
-        while (parentElement.length > 0) {
-            parentElement.forEach((item) => {
-                parentElement.pop(item);
-            });
-        }
-    };
-
-    const fader = (color) => d3.interpolateRgb(color, "#fff")(0.2);
+    const colorFade = (color) => d3.interpolateRgb(color, "#fff")(0.2);
     //! GLOBAL DATA  !//
     //^ VARIANTS - CONSTANTS  ^//
     const body = document.querySelector("BODY");
@@ -47,8 +38,11 @@ document.addEventListener("DOMContentLoaded", () => {
         width: 960,
         height: 570,
         padding: 2,
+        item: 15,
+        legend_offset: 10,
+        legend_tile_padding: 2,
     };
-    const colorRange = ["#1f77b4", "#aec7e8", "#ff7f0e", "#ffbb78", "#2ca02c", "#98df8a", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94", "#e377c2", "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5"].map(fader);
+    const colorRange = ["#1f77b4", "#aec7e8", "#ff7f0e", "#ffbb78", "#2ca02c", "#98df8a", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94", "#e377c2", "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5"].map(colorFade);
 
     const color = d3.scaleOrdinal().range(colorRange);
     //^CREATING DATA BTNS ^//
@@ -84,16 +78,17 @@ document.addEventListener("DOMContentLoaded", () => {
     //^ SET SVG  ^//
     //~ SET SVG CONTAINER ~//
     const mapSection = d3.select("BODY").append("section").attr("id", "map_section").attr("class", "map_section flex flex_column_center");
+    const legendSection = d3.select("BODY").append("section").attr("id", "legend_section").attr("class", "legend_section flex flex_column_center");
     //^ FETCH DATA   ^//
     let rawData = {};
     const fetchData = async (link) => {
-        deleteChildElements(document.querySelector("#map_section"));
         rawData = await d3.json(link);
         console.log(rawData);
         createTitle(rawData);
 
         //~ SET SVG~//
         const mapSVG = mapSection.append("svg").attr("class", "treemap").attr("id", "treemap").attr("width", mapDimentions.width).attr("height", mapDimentions.height);
+
         //^ SET TREEMAP AND CONDITIONS  ^//
         //~ SET TREEMAP ~//
         const treemap = d3.treemap().size([mapDimentions.width, mapDimentions.height]).paddingInner(mapDimentions.padding);
@@ -137,13 +132,47 @@ document.addEventListener("DOMContentLoaded", () => {
             .data((d) => d.data.name.split(/(?=[A-Z][^A-Z])/g))
             .enter()
             .append("tspan")
-            .attr("x", 4)
-            .attr("y", (d, i) => 13 + i * 10)
+            .attr("x", 5)
+            .attr("y", (d, i) => 12 + i * 10)
             .text((d) => d);
 
         //^ SET CATEGORIES ^//
-        let mapCategories = root.leaves().map((nodes) => nodes.data.category);
-        mapCategories = mapCategories.filter((category, index, self) => self.indexOf(category) === index);
+        let mapCategories = root.leaves().map((item) => item.data.category);
+        console.log(mapCategories);
+
+        const removeDuplicates = (originalArray) => {
+            var newArray = [];
+            var lookupObject = {};
+            for (var i in originalArray) {
+                lookupObject[originalArray[i]] = originalArray[i];
+            }
+
+            for (i in lookupObject) {
+                newArray.push(lookupObject[i]);
+            }
+            return newArray;
+        };
+        const cleanMap = removeDuplicates(mapCategories);
+        console.log(cleanMap);
+        //^SET LEGEND ^//
+
+        legendSection
+            .append("g")
+            .attr("width", mapDimentions.width)
+            .selectAll("g")
+            .data(cleanMap)
+            .enter()
+            .append("g")
+            .attr("id", "legend")
+            .attr("class", "legend")
+            .append("text")
+            .html((d) => d);
+        //^ SET LEGENDS ^//
+        setTimeout(() => {
+            document.querySelector(".map_section").style.opacity = 1;
+            document.querySelector(".description_section").style.opacity = 1;
+            document.querySelector(".legend_section").style.opacity = 1;
+        }, 100);
     };
 
     //^ PROJECTING FIRST DATA ^//
@@ -161,7 +190,14 @@ document.addEventListener("DOMContentLoaded", () => {
                         return item;
                     }
                 });
-                fetchData(newSearch[0].api_link);
+                document.querySelector(".map_section").style.opacity = 0;
+                document.querySelector(".description_section").style.opacity = 0;
+                document.querySelector(".legend_section").style.opacity = 0;
+                setTimeout(() => {
+                    deleteChildElements(document.querySelector("#map_section"));
+                    deleteChildElements(document.querySelector("#legend_section"));
+                    fetchData(newSearch[0].api_link);
+                }, 500);
             });
         });
     }, 250);
