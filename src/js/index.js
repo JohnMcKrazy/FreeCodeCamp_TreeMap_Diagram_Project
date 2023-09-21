@@ -169,9 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
         legend
             .append("text")
             .attr("class", "legend_text")
-            .text((d) => d)
-            .attr("x", mapDimentions.legend_offset + mapDimentions.item)
-            .attr("y", -2 + mapDimentions.item);
+            .text((d) => d);
         //^ SET LEGENDS ^//
         setTimeout(() => {
             document.querySelector(".map_section").style.opacity = 1;
