@@ -144,7 +144,7 @@ SVG {
     height: 100%;
 }
 .extra_btn {
-    position: absolute;
+    position: fixed;
     width: 4rem;
     height: 4rem;
     right: 2rem;
@@ -190,15 +190,35 @@ HEADER {
     background: var(--hover);
     color: var(--textContrast);
 }
-.description_section {
-    padding: 4rem 0;
-}
+
 .description_section,
 .map_section,
 .legend_section {
     opacity: 0;
     transition: opacity 200ms ease-in-out;
 }
+.description_section {
+    padding: 4rem 0;
+}
+
+.legend_section {
+    padding: 2rem 0;
+}
+.legend_group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 120px);
+    gap: 2rem;
+}
+.legend {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+/* .legend rect,
+.legend text {
+    display: inline-block;
+} */
 .title_map {
     color: var(--firstColor);
     font-size: var(--fontSizeXL);
@@ -215,4 +235,9 @@ HEADER {
     letter-spacing: 0.05rem;
     font-size: var(--fontSizeXS);
     width: 100%;
+}
+.legend_item {
+    width: 30px;
+    height: 30px;
+    margin-right: 1rem;
 }

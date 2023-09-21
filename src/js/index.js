@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const colorFade = (color) => d3.interpolateRgb(color, "#fff")(0.2);
     //! GLOBAL DATA  !//
     //^ VARIANTS - CONSTANTS  ^//
-    const body = document.querySelector("BODY");
+    const BODY = document.querySelector("body");
     const dataBtnTemplate = document.querySelector("#data_btn_template").content;
     const searchNav = document.querySelector(".search_nav");
     const SRC_DATA = [
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     //^CREATING DESCRIPTION ^//
-    const descriptionSection = d3.select("BODY").append("section").attr("id", "description_section").attr("class", "description_section flex flex_column_center");
+    const descriptionSection = d3.select(BODY).append("section").attr("id", "description_section").attr("class", "description_section flex flex_column_center");
 
     //^ CREATE TITLE  ^//
     const titleMap = descriptionSection.append("h1").attr("id", "title").attr("class", "title_map");
@@ -77,8 +77,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //^ SET SVG  ^//
     //~ SET SVG CONTAINER ~//
-    const mapSection = d3.select("BODY").append("section").attr("id", "map_section").attr("class", "map_section flex flex_column_center");
-    const legendSection = d3.select("BODY").append("section").attr("id", "legend_section").attr("class", "legend_section flex flex_column_center");
+    const mapSection = d3.select(BODY).append("section").attr("id", "map_section").attr("class", "map_section flex flex_column_center");
+    const legendSection = d3.select(BODY).append("section").attr("id", "legend_section").attr("class", "legend_section flex flex_column_center");
+    document.querySelector(".legend_section").style.width = mapDimentions.width + "px";
     //^ FETCH DATA   ^//
     let rawData = {};
     const fetchData = async (link) => {
@@ -152,21 +153,25 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             return newArray;
         };
-        const cleanMap = removeDuplicates(mapCategories);
-        console.log(cleanMap);
+        const cleanCategoriesList = removeDuplicates(mapCategories);
+        console.log(cleanCategoriesList);
+
         //^SET LEGEND ^//
 
-        legendSection
-            .append("g")
-            .attr("width", mapDimentions.width)
-            .selectAll("g")
-            .data(cleanMap)
-            .enter()
-            .append("g")
-            .attr("id", "legend")
-            .attr("class", "legend")
+        const legendGroup = legendSection.append("g").attr("width", mapDimentions.width).attr("class", "legend_group").selectAll("g").data(cleanCategoriesList).enter();
+        document.querySelector(".legend_group").style.width = mapDimentions.width + "px";
+
+        const legend = legendGroup.append("g").attr("id", "legend").attr("class", "legend");
+        legend
+            .append("rect")
+            .attr("class", "legend_item")
+            .style("background", (d) => color(d));
+        legend
             .append("text")
-            .html((d) => d);
+            .attr("class", "legend_text")
+            .text((d) => d)
+            .attr("x", mapDimentions.legend_offset + mapDimentions.item)
+            .attr("y", -2 + mapDimentions.item);
         //^ SET LEGENDS ^//
         setTimeout(() => {
             document.querySelector(".map_section").style.opacity = 1;
@@ -214,7 +219,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentIcon = "";
 
     const changeTheme = (tm) => {
-        const BODY = document.querySelector("body");
         const lightT = "light_theme";
         const darkT = "dark_theme";
         if (!tm) {
@@ -253,12 +257,13 @@ document.addEventListener("DOMContentLoaded", () => {
     themeBtn.addEventListener("click", () => changeTheme(currentTheme));
     //^ THEME ACTIONS - OVER ^//
     //^ TO THE TOP ACTIONS - START ^//
-    const topBtn = document.querySelector("#top_btn");
+    const topBtn = document.querySelector(".top_btn");
     const toTheTop = () => {
-        const currentPosition = body.getBoundingClientRect().top;
+        console.log("top button action");
+        const currentPosition = BODY.getBoundingClientRect().top;
         window.scrollTo(currentPosition, 0);
     };
-    topBtn.addEventListener("click", toTheTop());
+    topBtn.addEventListener("click", toTheTop);
     // ! THEME AND TOP BTN ACTIONS - OVER ! //
 
     //^ TO THE TOP ACTIONS - OVER ^//
