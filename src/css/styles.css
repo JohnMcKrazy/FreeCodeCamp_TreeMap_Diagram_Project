@@ -57,8 +57,9 @@ HTML {
     /*¿ BACKGROUNDS */
     --bgColor: rgb(240, 240, 240);
     --hover: rgba(25, 25, 25, 0.5);
+    --bgTip: rgb(220, 220, 220, 0.9);
     /*¿GENERALS */
-    --firstColor: skyblue;
+    --firstColor: darkslateblue;
 }
 .dark_theme {
     /*¿COLORS */
@@ -68,8 +69,9 @@ HTML {
     /*¿BACKGROUNDS */
     --bgColor: rgb(25, 25, 25);
     --hover: rgba(250, 250, 250, 0.5);
+    --bgTip: rgba(30, 30, 30, 0.9);
     /*¿GENERALS */
-    --firstColor: darkslateblue;
+    --firstColor: skyblue;
 }
 .moon_icon {
     fill: darkslateblue;
@@ -117,9 +119,8 @@ BUTTON {
 SVG {
     height: 100%;
     width: auto;
-    user-select: none;
-    pointer-events: none;
 }
+
 /*! UTILITIES */
 .flex {
     display: flex;
@@ -139,6 +140,40 @@ SVG {
     align-items: center;
 }
 /*! PARTS */
+
+SVG,
+SVG *,
+.tooltip,
+.tooltip * {
+    user-select: none;
+    pointer-events: none;
+}
+
+.tooltip {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 1rem;
+    background: var(--bgTip);
+    border-radius: 0.5rem;
+    transition: opacity 100ms ease-in-out;
+    z-index: 99;
+    user-select: none;
+    pointer-events: none;
+    max-width: 300px;
+}
+.tooltip H1 {
+    color: var(--firstColor);
+}
+.tooltip H2,
+.tooltip P {
+    font-size: var(--fontSizeN);
+    font-weight: var(--fontWeightM);
+}
+.tooltip p {
+    margin-top: 1.5rem;
+    font-size: var(--fontSizeN);
+}
 .icon_container {
     width: 100%;
     height: 100%;
@@ -162,16 +197,12 @@ SVG {
     fill: var(--textContrast);
 }
 .theme_btn {
-    bottom: 7rem;
-    padding: 0.75rem;
-}
-.top_btn {
     bottom: 2rem;
+    padding: 0.75rem;
 }
 HEADER {
     width: 100%;
     height: fit-content;
-    background: var(--bgNav);
 }
 .search_nav {
     width: 100%;
@@ -200,6 +231,24 @@ HEADER {
 .description_section {
     padding: 4rem 0;
 }
+.title_map {
+    color: var(--firstColor);
+    font-size: var(--fontSizeXL);
+    margin-bottom: 1rem;
+    font-weight: var(--fontWeightB);
+    -webkit-text-stroke: 0.5px var(--textColor);
+}
+.description_map {
+    color: var(--lightGray);
+    font-size: var(--fontSizeG);
+    font-weight: var(--fontWeightM);
+}
+.tile-text {
+    font-weight: var(--fontWeightLht);
+    letter-spacing: 0.05rem;
+    font-size: var(--fontSizeXS);
+    width: 100%;
+}
 
 .legend_section {
     padding: 2rem 0;
@@ -215,28 +264,11 @@ HEADER {
     justify-content: flex-start;
     align-items: center;
 }
-/* .legend rect,
+.legend rect,
 .legend text {
     display: inline-block;
-} */
-.title_map {
-    color: var(--firstColor);
-    font-size: var(--fontSizeXL);
-    margin-bottom: 1rem;
-    font-weight: var(--fontWeightB);
 }
-.description_map {
-    color: var(--lightGray);
-    font-size: var(--fontSizeG);
-    font-weight: var(--fontWeightM);
-}
-.tile-text {
-    font-weight: var(--fontWeightLht);
-    letter-spacing: 0.05rem;
-    font-size: var(--fontSizeXS);
-    width: 100%;
-}
-.legend_item {
+.legend-item {
     width: 30px;
     height: 30px;
     margin-right: 1rem;

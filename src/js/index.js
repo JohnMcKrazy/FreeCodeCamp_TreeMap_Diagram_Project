@@ -55,13 +55,26 @@ document.addEventListener("DOMContentLoaded", () => {
         newBtn.setAttribute("data-db", item.key);
         searchNav.append(newBtn);
     });
+    // ^CREATING TIP ^//
+
+    // ^ CREATE TOOLTIP ^ //
+    const tooltip = d3
+        .select(BODY)
+        .append("div")
+        .attr("class", "tooltip")
+        .attr("id", "tooltip")
+        .html(
+            `<h1 class="data_name"></h1>
+<h2 class="data_category"></h2>
+<p class="data_value" data-value=""></p>`
+        );
 
     //^CREATING DESCRIPTION ^//
     const descriptionSection = d3.select(BODY).append("section").attr("id", "description_section").attr("class", "description_section flex flex_column_center");
 
     //^ CREATE TITLE  ^//
     const titleMap = descriptionSection.append("h1").attr("id", "title").attr("class", "title_map");
-    const descriptionMap = descriptionSection.append("h2").attr("id", "descrition").attr("class", "description_map");
+    const descriptionMap = descriptionSection.append("h2").attr("id", "description").attr("class", "description_map");
     const createTitle = (data) => {
         if (data.name === "Movies") {
             titleMap.html(SRC_DATA[1].title);
@@ -97,11 +110,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const root = d3
             .hierarchy(rawData)
-            .eachBefore((d) => {
-                return (d.data.id = (d.parent ? `${d.parent.data.id}.` : "") + d.data.name);
+            .eachBefore((data) => {
+                return (data.data.id = (data.parent ? `${data.parent.data.id}.` : "") + data.data.name);
             })
-            .sum((d) => d.value)
-            .sort((a, b) => b.height - a.height || b.value - a.value);
+            .sum((data) => data.value)
+            .sort((item1, item2) => item2.height - item1.height || item2.value - item1.value);
 
         //~SET TREEMAP~//
         treemap(root);
@@ -113,29 +126,45 @@ document.addEventListener("DOMContentLoaded", () => {
             .enter()
             .append("g")
             .attr("class", "group")
-            .attr("transform", (d) => `translate(${d.x0},${d.y0})`);
+            .attr("transform", (data) => `translate(${data.x0},${data.y0})`);
 
         grill
             .append("rect")
-            .attr("id", (d) => d.data.id)
+            .attr("id", (data) => data.data.id)
             .attr("class", "tile")
-            .attr("width", (d) => d.x1 - d.x0)
-            .attr("height", (d) => d.y1 - d.y0)
-            .attr("data-name", (d) => d.data.name)
-            .attr("data-category", (d) => d.data.category)
-            .attr("data-value", (d) => d.data.value)
-            .attr("fill", (d) => color(d.data.category));
+            .attr("width", (data) => data.x1 - data.x0)
+            .attr("height", (data) => data.y1 - data.y0)
+            .attr("data-name", (data) => data.data.name)
+            .attr("data-category", (data) => data.data.category)
+            .attr("data-value", (data) => data.value)
+            .attr("fill", (data) => color(data.data.category));
 
         grill
             .append("text")
             .attr("class", "tile-text")
             .selectAll("tspan")
-            .data((d) => d.data.name.split(/(?=[A-Z][^A-Z])/g))
+            .data((data) => data.data.name.split(/(?=[A-Z][^A-Z])/g))
             .enter()
             .append("tspan")
             .attr("x", 5)
-            .attr("y", (d, i) => 12 + i * 10)
-            .text((d) => d);
+            .attr("y", (data, item) => 12 + item * 10)
+            .text((data) => data);
+        grill
+            .on("mouseenter", (event, data) => {
+                console.log(data);
+                tooltip
+                    .style("opacity", 1)
+                    .style("left", `${event.pageX + 15}px`)
+                    .style("top", `${event.pageY - 100}px`);
+
+                tooltip.attr("data-value", data.value);
+                document.querySelector(".data_name").textContent = data.data.name;
+                document.querySelector(".data_category").textContent = data.data.category;
+                document.querySelector(".data_value").textContent = `Value: ${data.value}`;
+            })
+            .on("mouseleave", () => {
+                tooltip.style("opacity", 0);
+            });
 
         //^ SET CATEGORIES ^//
         let mapCategories = root.leaves().map((item) => item.data.category);
@@ -164,12 +193,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const legend = legendGroup.append("g").attr("id", "legend").attr("class", "legend");
         legend
             .append("rect")
-            .attr("class", "legend_item")
-            .style("background", (d) => color(d));
+            .attr("class", "legend-item")
+            .style("fill", (data) => {
+                console.log(data);
+                console.log(color(data));
+                return color(data);
+            })
+            .style("background", (data) => color(data));
         legend
             .append("text")
             .attr("class", "legend_text")
-            .text((d) => d);
+            .text((data) => data);
         //^ SET LEGENDS ^//
         setTimeout(() => {
             document.querySelector(".map_section").style.opacity = 1;
@@ -254,15 +288,4 @@ document.addEventListener("DOMContentLoaded", () => {
     changeTheme();
     themeBtn.addEventListener("click", () => changeTheme(currentTheme));
     //^ THEME ACTIONS - OVER ^//
-    //^ TO THE TOP ACTIONS - START ^//
-    const topBtn = document.querySelector(".top_btn");
-    const toTheTop = () => {
-        console.log("top button action");
-        const currentPosition = BODY.getBoundingClientRect().top;
-        window.scrollTo(currentPosition, 0);
-    };
-    topBtn.addEventListener("click", toTheTop);
-    // ! THEME AND TOP BTN ACTIONS - OVER ! //
-
-    //^ TO THE TOP ACTIONS - OVER ^//
 });
