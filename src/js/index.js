@@ -151,11 +151,12 @@ document.addEventListener("DOMContentLoaded", () => {
             .text((data) => data);
         grill
             .on("mouseenter", (event, data) => {
+                console.log(event);
                 console.log(data);
                 tooltip
                     .style("opacity", 1)
-                    .style("left", `${event.pageX + 15}px`)
-                    .style("top", `${event.pageY - 100}px`);
+                    .style("left", `${event.clientX + 15}px`)
+                    .style("top", `${event.clientY - 100}px`);
 
                 tooltip.attr("data-value", data.value);
                 document.querySelector(".data_name").textContent = data.data.name;
