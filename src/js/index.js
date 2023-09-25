@@ -164,8 +164,8 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             grill
                 .on("mouseenter", (event, data) => {
-                    console.log(event);
-                    console.log(data);
+                    /* console.log(event); */
+                    /* console.log(data); */
                     tooltip
                         .style("opacity", 1)
                         .style("left", `${event.layerX + 15}px`)
