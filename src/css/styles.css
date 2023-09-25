@@ -141,8 +141,8 @@ SVG {
 }
 /*! PARTS */
 
-SVG,
-SVG *,
+/* SVG,
+SVG *, */
 .tooltip,
 .tooltip * {
     user-select: none;
@@ -150,7 +150,8 @@ SVG *,
 }
 
 .tooltip {
-    position: absolute;
+    opacity: 0;
+    position: fixed;
     left: 0;
     top: 0;
     padding: 1rem;
@@ -158,8 +159,6 @@ SVG *,
     border-radius: 0.5rem;
     transition: opacity 100ms ease-in-out;
     z-index: 99;
-    user-select: none;
-    pointer-events: none;
     max-width: 300px;
 }
 .tooltip H1 {

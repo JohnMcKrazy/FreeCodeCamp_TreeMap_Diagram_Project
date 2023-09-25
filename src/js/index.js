@@ -131,7 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         //~SET TREEMAP~//
         treemap(root);
-        console.log(root.leaves());
         //^ SET TREEMAP CELLS  ^//
         const grill = mapSVG
             .selectAll("g")
@@ -162,27 +161,28 @@ document.addEventListener("DOMContentLoaded", () => {
             .attr("x", 5)
             .attr("y", (data, item) => 12 + item * 10)
             .text((data) => data);
-        grill
-            .on("mouseenter", (event, data) => {
-                /* console.log(event); */
-                /* console.log(data); */
-                tooltip
-                    .style("opacity", 1)
-                    .style("left", `${event.clientX + 15}px`)
-                    .style("top", `${event.clientY - 100}px`);
-
-                tooltip.attr("data-value", data.value);
-                document.querySelector(".data_name").textContent = data.data.name;
-                document.querySelector(".data_category").textContent = data.data.category;
-                document.querySelector(".data_value").textContent = `Value: ${data.value}`;
-            })
-            .on("mouseleave", () => {
-                tooltip.style("opacity", 0);
-            });
+        setTimeout(() => {
+            grill
+                .on("mouseenter", (event, data) => {
+                    console.log(event);
+                    console.log(data);
+                    tooltip
+                        .style("opacity", 1)
+                        .style("left", `${event.layerX + 15}px`)
+                        .style("top", `${event.layerY - 100}px`)
+                        .attr("data-value", data.value);
+                    document.querySelector(".data_name").textContent = data.data.name;
+                    document.querySelector(".data_category").textContent = data.data.category;
+                    document.querySelector(".data_value").textContent = `Value: ${data.value}`;
+                })
+                .on("mouseleave", () => {
+                    tooltip.style("opacity", 0);
+                });
+        }, 250);
 
         //^ SET CATEGORIES ^//
         let mapCategories = root.leaves().map((item) => item.data.category);
-        console.log(mapCategories);
+        /* console.log(mapCategories); */
 
         const cleanCategoriesList = deleteDuplicatesInArray(mapCategories);
         console.log(cleanCategoriesList);
