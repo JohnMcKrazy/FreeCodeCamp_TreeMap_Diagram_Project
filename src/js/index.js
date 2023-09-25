@@ -1,5 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
     //! GLOBAL FUNCTIONS !//
+    //^ REMOVE DUPLICATES IN ARRAY ^//
+
+    const deleteDuplicatesInArray = (originalArray) => {
+        let newArray = [];
+        let lookupObject = {};
+        for (let i in originalArray) {
+            lookupObject[originalArray[i]] = originalArray[i];
+        }
+        for (let i in lookupObject) {
+            newArray.push(lookupObject[i]);
+        }
+        return newArray;
+    };
     //^ DELETE CHILDREN ^//
     const deleteChildElements = (parentElement) => {
         let child = parentElement.lastElementChild;
@@ -151,8 +164,8 @@ document.addEventListener("DOMContentLoaded", () => {
             .text((data) => data);
         grill
             .on("mouseenter", (event, data) => {
-                console.log(event);
-                console.log(data);
+                /* console.log(event); */
+                /* console.log(data); */
                 tooltip
                     .style("opacity", 1)
                     .style("left", `${event.clientX + 15}px`)
@@ -171,19 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let mapCategories = root.leaves().map((item) => item.data.category);
         console.log(mapCategories);
 
-        const removeDuplicates = (originalArray) => {
-            var newArray = [];
-            var lookupObject = {};
-            for (var i in originalArray) {
-                lookupObject[originalArray[i]] = originalArray[i];
-            }
-
-            for (i in lookupObject) {
-                newArray.push(lookupObject[i]);
-            }
-            return newArray;
-        };
-        const cleanCategoriesList = removeDuplicates(mapCategories);
+        const cleanCategoriesList = deleteDuplicatesInArray(mapCategories);
         console.log(cleanCategoriesList);
 
         //^SET LEGEND ^//
@@ -195,11 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
         legend
             .append("rect")
             .attr("class", "legend-item")
-            .style("fill", (data) => {
-                console.log(data);
-                console.log(color(data));
-                return color(data);
-            })
+            .style("fill", (data) => color(data))
             .style("background", (data) => color(data));
         legend
             .append("text")
